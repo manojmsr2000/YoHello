@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+html{ overflow-y: scroll;}
+body{
+  text-align: center;
+  font-family: 'Courgette', cursive;
+}
+
+.container-fluid{
+  padding: 5% 10%;
+}
+
+.col{
+  padding: 7% 0;
+}
+.form-control{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 60%;
+}
+form{
+  text-align: center;
+  padding: 5%;
+}
+.wrapper{
+  padding: 5%;
+  background-image: url("../images/background/back.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#footer a{
+  padding: 5% 6%;
+  color: white;
+}
+
+#second {
+  display: none;
+}
