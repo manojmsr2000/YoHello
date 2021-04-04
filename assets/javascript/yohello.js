@@ -17,6 +17,7 @@ $(document).ready(function() {
 		});
 
 	});
-
-
+	$(".main .hamburger").click(function(){
+		$("#sidebar").toggleClass("toggled");
+	});
 });

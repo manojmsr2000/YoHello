@@ -26,46 +26,59 @@ if(isset($_POST['respond_request'])){
 
   <main class = "content">
     <div class="container-fluid">
-      <div class="pic_left">
-        <img src="<?php echo $user_array['profile_pic'] ?>" alt="" class="img-fluid rounded-circle mb-2">
+      <div class="row">
+        <div class="col col-lg-3 col-md-12">
+          <div class="pic_left">
+            <img src="<?php echo $user_array['profile_pic'] ?>" alt="" class="img-fluid rounded-circle mb-2">
+          </div>
+          <div class="font-weight-bold text-light"><h4><?php echo $user_array['first_name']." ".$user_array['last_name']; ?></h4></div>
+          <div class="profile_info">
+            <p class="text-light"><?php echo "Posts: ".$user_array['num_posts']; ?></p>
+            <p class="text-light"><?php echo "Likes: ".$user_array['num_likes']; ?></p>
+            <p class="text-light"><?php echo "Friends: ".$num_friends; ?></p>
+          </div>
+          <form action="<?php echo $username; ?>" method="POST">
+            <?php
+
+            $profile_user_obj = new User($con, $username);
+            if($profile_user_obj->isClosed()){
+              header("Location: user_closed.php");
+            }
+
+            $logged_in_user_obj = new User($con,$userLoggedIn);
+            if($userLoggedIn != $username){
+              if($logged_in_user_obj->isFriend($username)){
+                echo "<button type='submit' name='remove_friend' class='btn btn-danger'>Remove Friend</button><br>";
+              }
+              else if($logged_in_user_obj->didReceiveRequest($username)){
+                echo "<button type='submit' name='respond_request' class='btn btn-warning'>Respond to Request</button><br>";
+              }
+              else if($logged_in_user_obj->didSendRequest($username)){
+                echo "<button type='submit' name='' class='btn btn-secondary'>Request Sent</button><br>";
+              }
+              else{
+                echo "<button type='submit' name='add_friend' class='btn btn-info'>Add Friend</button><br>";
+              }
+            }
+
+            ?>
+          </form>
+          <button type="submit" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#post_form">
+            Post Something
+          </button>
+          <?php if($userLoggedIn!=$username){
+            echo "<div class='text-light mt-3'>";
+            echo $logged_in_user_obj->getMutualFriends($username)." Mutual Friends";
+            echo "</div>";
+          }
+           ?>
+        </div>
+        <div class="col col-lg-9 col-md-12 mt-3">
+          <div class="posts_area"</div>
+          <img id="loading" src="assets/images/icons/loading.gif">
+        </div>
+        </div>
       </div>
-      <div class="font-weight-bold text-light"><h4><?php echo $user_array['first_name']." ".$user_array['last_name']; ?></h4></div>
-      <div class="profile_info">
-        <p class="text-light"><?php echo "Posts: ".$user_array['num_posts']; ?></p>
-        <p class="text-light"><?php echo "Likes: ".$user_array['num_likes']; ?></p>
-        <p class="text-light"><?php echo "Friends: ".$num_friends; ?></p>
-      </div>
-      <form action="<?php echo $username; ?>" method="POST">
-        <?php
-
-        $profile_user_obj = new User($con, $username);
-        if($profile_user_obj->isClosed()){
-          header("Location: user_closed.php");
-        }
-
-        $logged_in_user_obj = new User($con,$userLoggedIn);
-        if($userLoggedIn != $username){
-          if($logged_in_user_obj->isFriend($username)){
-            echo "<button type='submit' name='remove_friend' class='btn btn-danger'>Remove Friend</button><br>";
-          }
-          else if($logged_in_user_obj->didReceiveRequest($username)){
-            echo "<button type='submit' name='respond_request' class='btn btn-warning'>Respond to Request</button><br>";
-          }
-          else if($logged_in_user_obj->didSendRequest($username)){
-            echo "<button type='submit' name='' class='btn btn-secondary'>Request Sent</button><br>";
-          }
-          else{
-            echo "<button type='submit' name='add_friend' class='btn btn-info'>Add Friend</button><br>";
-          }
-        }
-
-        ?>
-      </form>
-      <br>
-      <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#post_form">
-        Post Something
-      </button>
-    </div>
   </main>
 
   <!-- Modal -->
@@ -95,13 +108,61 @@ if(isset($_POST['respond_request'])){
   </div>
 </div>
 <script>
-  $(document).ready(function(){
-    $(".main .hamburger").click(function(){
-      $("#sidebar").toggleClass("toggled");
-    });
+const userLoggedIn = '<?php echo $userLoggedIn; ?>';
+const profileUsername = '<?php echo $username; ?>'
+$(document).ready(function() {
+
+  $('#loading').show();
+
+  //Original ajax request for loading first posts
+  $.ajax({
+    url: "includes/handlers/ajax_load_profile_posts.php",
+    type: "POST",
+    data: "page=1&userLoggedIn=" + userLoggedIn + "&profileUsername="+profileUsername,
+    cache:false,
+
+    success: function(data) {
+      $('#loading').hide();
+      $('.posts_area').html(data);
+    }
   });
+
+  $(window).scroll(function() {
+  //$('#load_more').on("click", function() {
+    var height = $('.posts_area').height();
+    var scroll_top = $(this).scrollTop();
+    var page = $('.posts_area').find('.nextPage').val();
+    var noMorePosts = $('.posts_area').find('.noMorePosts').val();
+
+    if (($(window).scrollTop() + $(window).height() > $(document).height()-2) && noMorePosts == 'false') {
+    //if (noMorePosts == 'false') {
+      $('#loading').show();
+
+      var ajaxReq = $.ajax({
+        url: "includes/handlers/ajax_load_profile_posts.php",
+        type: "POST",
+        data: "page=" + page + "&userLoggedIn=" + userLoggedIn + "&profileUsername="+profileUsername,
+        cache:false,
+
+        success: function(response) {
+          $('.posts_area').find('.nextPage').remove(); //Removes current .nextpage
+          $('.posts_area').find('.noMorePosts').remove(); //Removes current .nextpage
+          $('.posts_area').find('.noMorePostsText').remove(); //Removes current .nextpage
+
+          $('#loading').hide();
+          $('.posts_area').append(response);
+        }
+      });
+
+    } //End if
+
+    return false;
+
+  }); //End (window).scroll(function())
+
+
+});
+
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-<script src="assets/javascript/yohello.js" charset="utf-8"></script>
 </body>
 </html>

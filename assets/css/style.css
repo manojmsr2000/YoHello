@@ -5,7 +5,9 @@ body{
   font-family: 'Courgette', cursive;
   background-color: #212529;
 }
-
+a{
+  text-decoration: none;
+}
 .col{
   padding: 1% 2%;
 }
@@ -237,4 +239,25 @@ main .container-fluid{
 
 .profile_info p{
   margin-bottom: 0.3rem;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  max-height: 350px;
+  overflow-y: scroll
+}
+
+.chat-message-left, .chat-message-right {
+  display: flex;
+  flex-shrink: 0
+}
+
+.chat-message-left {
+  margin-right: auto
+}
+
+.chat-message-right {
+  flex-direction: row-reverse;
+  margin-left: auto
 }
