@@ -29,7 +29,7 @@ if(isset($_POST['respond_request'])){
       <div class="row">
         <div class="col col-lg-3 col-md-12">
           <div class="pic_left">
-            <img src="<?php echo $user_array['profile_pic'] ?>" alt="" class="img-fluid rounded-circle mb-2">
+            <img src="<?php echo $user_array['profile_pic'] ?>" alt="" class="img-fluid rounded-3 mb-2">
           </div>
           <div class="font-weight-bold text-light"><h4><?php echo $user_array['first_name']." ".$user_array['last_name']; ?></h4></div>
           <div class="profile_info">
@@ -51,7 +51,7 @@ if(isset($_POST['respond_request'])){
                 echo "<button type='submit' name='remove_friend' class='btn btn-danger'>Remove Friend</button><br>";
               }
               else if($logged_in_user_obj->didReceiveRequest($username)){
-                echo "<button type='submit' name='respond_request' class='btn btn-warning'>Respond to Request</button><br>";
+                echo "<button type='submit' name='respond_request' class='btn btn-info'>Respond to Request</button><br>";
               }
               else if($logged_in_user_obj->didSendRequest($username)){
                 echo "<button type='submit' name='' class='btn btn-secondary'>Request Sent</button><br>";
@@ -74,9 +74,8 @@ if(isset($_POST['respond_request'])){
            ?>
         </div>
         <div class="col col-lg-9 col-md-12 mt-3">
-          <div class="posts_area"</div>
+          <div class="posts_area"></div>
           <img id="loading" src="assets/images/icons/loading.gif">
-        </div>
         </div>
       </div>
   </main>
@@ -108,7 +107,7 @@ if(isset($_POST['respond_request'])){
   </div>
 </div>
 <script>
-const userLoggedIn = '<?php echo $userLoggedIn; ?>';
+const loggedInUser = '<?php echo $userLoggedIn; ?>';
 const profileUsername = '<?php echo $username; ?>'
 $(document).ready(function() {
 
@@ -118,7 +117,7 @@ $(document).ready(function() {
   $.ajax({
     url: "includes/handlers/ajax_load_profile_posts.php",
     type: "POST",
-    data: "page=1&userLoggedIn=" + userLoggedIn + "&profileUsername="+profileUsername,
+    data: "page=1&userLoggedIn=" + loggedInUser + "&profileUsername="+profileUsername,
     cache:false,
 
     success: function(data) {

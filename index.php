@@ -2,9 +2,43 @@
 include("includes/header.php");
 
 if(isset($_POST['post'])){
-  $post = new Post($con, $userLoggedIn);
-  $post->submitPost($_POST['post_text'],'none');
-  header("Location: index.php");
+  $uploadOk = 1;
+  $imageName = $_FILES['fileToUpload']['name'];
+  $errorMessage = "";
+  if($imageName != ""){
+    $targetDir = "assets/images/posts/";
+    $imageName = $targetDir . uniqid() . basename($imageName);
+    $imageFileType = pathinfo($imageName, PATHINFO_EXTENSION);
+    if($_FILES['fileToUpload']['size'] > 10000000){
+      $errorMessage = "File is too big!";
+      $uploadOk = 0;
+    }
+
+    if(strtolower($imageFileType) != "jpeg" && strtolower($imageFileType) != "jpg" && strtolower($imageFileType) != "png"){
+      $errorMessage = "Only images are allowed!";
+      $uploadOk = 0;
+    }
+
+    if($uploadOk){
+      if(move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $imageName)){
+        //Image uploaded
+      } else {
+        //Image didn't upload
+        $uploadOk = 0;
+      }
+    }
+  }
+
+  if($uploadOk){
+    $post = new Post($con, $userLoggedIn);
+    $post->submitPost($_POST['post_text'],'none', $imageName);
+    header("Location: index.php");
+
+  } else {
+    echo "<div class='text-center text-danger'>
+    $errorMessage
+    </div>";
+  }
 }
 // session_destroy();
 ?>
@@ -16,7 +50,8 @@ if(isset($_POST['post'])){
 						Welcome back, <?php echo $user['first_name'];?>!
 					</h1>
 			</div>
-      <form class="post_form" action="index.php" method="post">
+      <form class="post_form" action="index.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="fileToUpload" class='text-light mb-2' />
         <textarea name="post_text" id="post_text" class = "form-control" rows="3" cols="80" placeholder="What's on your mind ?"></textarea>
         <input class = "btn btn-outline-light rounded-pill" type="submit" name="post" value="Post">
       </form>
@@ -27,6 +62,7 @@ if(isset($_POST['post'])){
       <img id="loading" src="assets/images/icons/loading.gif">
 
     </div>
+
   </main>
 </div>
 <script>

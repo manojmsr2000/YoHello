@@ -1,6 +1,8 @@
 <?php
 include("includes/classes/User.php");
 include("includes/classes/Post.php");
+include("includes/classes/Notification.php");
+
 require 'config/config.php';
 if(isset($_SESSION['username'])){
   $userLoggedIn = $_SESSION['username'];
@@ -48,6 +50,10 @@ else{
       $user_likes = mysqli_query($con, "UPDATE users SET num_likes='$total_user_likes' where username='$user_liked'");
       $insert_user = mysqli_query($con,"INSERT INTO likes values('','$userLoggedIn','$post_id')");
       //Insert Notification
+      if($user_liked != $userLoggedIn){
+        $notification = new Notification($con, $userLoggedIn);
+        $notification->insertNotification($post_id, $user_liked, "like");
+      }
     }
     //Unlike Button
     if(isset($_POST['unlike_button'])){
@@ -64,7 +70,7 @@ else{
       echo "<form action='like.php?post_id=".$post_id."' method='POST'>
             <input type='submit' class='comment_like' name='unlike_button' value='Unlike'>
             <div class='like_value'>
-              ".$total_likes." Likes
+              ".$total_likes." Like(s)
             </div>
       </form>";
     }
@@ -72,7 +78,7 @@ else{
       echo "<form action='like.php?post_id=".$post_id."' method='POST'>
             <input type='submit' class='comment_like' name='like_button' value='Like'>
             <div class='like_value'>
-              ".$total_likes." Likes
+              ".$total_likes." Like(s)
             </div>
       </form>";
     }
