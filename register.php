@@ -30,7 +30,6 @@ require 'includes/form_handlers/login_handler.php';
     <div class="container-fluid">
       <div class="row">
         <div class="col col-lg-6 wrapper">
-
         </div>
         <div class="col col-lg-6 bg-light">
           <h1 style = "color: #29a19c; font-family: 'Berkshire Swash', cursive;">YoHello!</h1>
@@ -105,7 +104,7 @@ require 'includes/form_handlers/login_handler.php';
       </div>
     </div>
     <footer class="bg-dark" id="footer">
-      <p class = "text-light">©YoHello! 2021</p>
+      <p class = "text-light">©YoHello! <?php echo $year = date("Y"); ?></p>
   </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

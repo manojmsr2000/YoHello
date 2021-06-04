@@ -6,6 +6,12 @@ $(document).ready(function() {
 		}
 	});
 
+	$("#search_text_input").focusout(function(){
+		if(window.matchMedia("(min-width: 800px)").matches){
+			$(this).animate({width: '200px'}, 300);
+		}
+	});
+
 	//Button for profile post
 	$('#submit_profile_post').click(function(){
 
@@ -68,14 +74,14 @@ function getDropdownData(user, type){
 
 			success: function(response){
 				$(".dropdown_data_window").html(response);
-				$(".dropdown_data_window").css({"padding-top": "25px", "height": "200px", "border": "1px solid white"});
+				$(".dropdown_data_window").css({"padding-top": "25px", "height": "300px"});
 				$("#dropdown_data_type").val(type);
 			}
 		});
 	}
 	else{
 		$(".dropdown_data_window").html("");
-		$(".dropdown_data_window").css({"padding": "0px", "height": "0px", "border": "none"});
+		$(".dropdown_data_window").css({"padding": "0px", "height": "0px"});
 	}
 }
 
@@ -94,3 +100,23 @@ function getLiveSeachUsers(value, user){
 		}
 	});
 }
+
+jQuery(document).ready(function($) {
+  var alterClass = function() {
+    var ww = document.body.clientWidth;
+    if (ww > 600) {
+      $('#sidebar').removeClass('toggled');
+			$('#hamburger').css('display', 'none');
+			$('.navbar-brand h2').addClass('me-5');
+    } else if (ww <= 601) {
+      $('#sidebar').addClass('toggled');
+			$('#hamburger').css("display", "block");
+			$('.navbar-brand h2').removeClass('me-5');
+    };
+  };
+  $(window).resize(function(){
+    alterClass();
+  });
+  //Fire it when the page first loads:
+  alterClass();
+});

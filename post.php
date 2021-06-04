@@ -15,7 +15,7 @@ $num_friends = (substr_count($user['friend_array'],",")) - 1;
 <main class = "content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col col-lg-3 col-md-12">
+      <div class="col-12 col-lg-3">
         <div class="pic_left">
           <img src="<?php echo $user['profile_pic'] ?>" alt="" class="img-fluid rounded-3 mb-2">
         </div>
@@ -27,7 +27,7 @@ $num_friends = (substr_count($user['friend_array'],",")) - 1;
 
         </div>
       </div>
-      <div class="col col-lg-9 col-md-12 mt-3">
+      <div class="col-12 col-lg-9 mt-3">
         <div class="posts_area"></div>
         <?php
           $post = new Post($con, $userLoggedIn);

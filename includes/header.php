@@ -19,7 +19,7 @@ else{
 <html>
 <head>
 	<title>YoHello!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes">
 
   <!-- CSS files-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
@@ -89,6 +89,7 @@ else{
                   }
                  ?>
             </li>
+
           </ul>
         </div>
       </nav>
@@ -107,68 +108,66 @@ else{
               $num_requests = $user_obj->getNumberOfFriendRequests();
         ?>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-          <div class="container-fluid">
-            <a class="navbar-brand me-5" href="index.php">
+          <div class="container-fluid ">
+            <a class="navbar-brand" href="index.php">
               <h2 class="logo">YoHello!</h2>
             </a>
-            <a class="hamburger sidebar-toggle d-flex ms-5 me-2 text-dark" href="#">
-        			  <i class="fas fa-bars fa-2x"></i>
-        		</a>
-
-            <form class="d-flex ms-3" action="search.php" method="GET" name="search_form">
-            <div class="input-group rounded">
-              <input type="search" class="form-control rounded form-control me-2 fa-sm" aria-label="Search"
-                aria-describedby="search-addon" placeholder= "Find Someone" id="search_text_input" onkeyup="getLiveSeachUsers(this.value, '<?php echo $userLoggedIn; ?>')" name="q" autocomplete="off" />
-              <button class="input-group-text border-0" id="search-addon" type="submit">
-                <i class="fas fa-search"></i>
-              </button>
+            <div class="navbar-nav me-auto justify-content-start">
+              <form class="d-flex form-group has-search" action="search.php" method="GET" name="search_form">
+                  <span class="fa fa-search form-control-feedback"></span>
+                  <input type="text" class="form-control rounded me-2" placeholder= "Find Someone" id="search_text_input" onkeyup="getLiveSeachUsers(this.value, '<?php echo $userLoggedIn; ?>')" name="q" autocomplete="off">
+              </form>
             </div>
-            </form>
-
-
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-              <div class="navbar-nav">
-                <a class="sidebar-link" aria-current="page" href="requests.php"><i class="fas fa-users fa-lg"></i>
-                  <?php
-                  if($num_requests > 0){
-                    echo '<span class="indicator" id="unread_request">'.$num_requests.'</span>';
-                  }
-                   ?>
-                </a>
-                <a class="sidebar-link" href="javascript:void(0)" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'message')"><i class="far fa-comment-dots fa-lg"></i>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav ms-auto flex-row flex-wrap ms-me-auto justify-content-center">
+                <a class="nav-link p-3" aria-current="page" href="requests.php"><i class="fas fa-users fa-lg"></i></a>
                 <?php
-                if($num_messages > 0){
-                  echo '<span class="indicator" id="unread_message">'.$num_messages.'</span>';
+                if($num_requests > 0){
+                  echo '<span class="counter counter-lg" id="unread_request">'.$num_requests.'</span>';
                 }
                  ?>
+                <a class="nav-link p-3" href="javascript:void(0)" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'message')"><i class="far fa-comment-dots fa-lg"></i>
                </a>
-                <a class="sidebar-link" href="javascript:void(0)" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'notification')">
+               <?php
+               if($num_messages > 0){
+                 echo '<span class="counter counter-lg" id="unread_message">'.$num_messages.'</span>';
+               }
+                ?>
+                <a class="nav-link p-3" href="javascript:void(0)" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'notification')">
                   <i class="far fa-bell fa-lg"></i>
-                  <?php
-                  if($num_notifications > 0){
-                    echo '<span class="indicator" id="unread_notification">'.$num_notifications.'</span>';
-                  }
-                   ?>
                 </a>
-                <a class="sidebar-link img" href="#"><img src="<?php echo $user['profile_pic']; ?>" class="img-fluid rounded-circle" alt="user_img" width="25px"/></a>
+                <?php
+                if($num_notifications > 0){
+                  echo '<span class="counter counter-lg" id="unread_notification">'.$num_notifications.'</span>';
+                }
+                 ?>
+                <a class="nav-link p-3" href="includes/handlers/logout.php">
+                  <i class="align-middle mr-2 fas fa-sign-out-alt fa-lg"></i>
+                </a>
+
+                  <a class="nav-link p-3" href="<?php echo $userLoggedIn; ?>"><?php echo $user['first_name']; ?></a>
+                </div>
               </div>
-            </div>
           </div>
       </nav>
-      <div class="dropdown_data_window mt-5" style="height: 0px;">
+
+      <a id="hamburger" class="hamburger sidebar-toggle text-success" href="#">
+          <i class="fas fa-bars fa-lg"></i>
+      </a>
+
+      <div class="dropdown_data_window mt-5 bg-dark">
           <input type="hidden" id="dropdown_data_type" value="">
       </div>
+      <div class="search_results_box">
+        <div class="search_results">
+        </div>
 
-      <div class="search_results">
+        <div class="search_results_footer_empty">
+        </div>
       </div>
-
-      <div class="search_results_footer_empty">
-      </div>
-
       <script>
       var userLoggedIn = '<?php echo $userLoggedIn; ?>';
 

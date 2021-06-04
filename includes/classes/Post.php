@@ -44,8 +44,8 @@ class Post{
       }
 
       //Update post count for user
-      $num_posts = $this->user_obj->getNumPosts();
-      $num_posts++;
+      $num_posts_query = mysqli_query($this->con, "SELECT * from posts where added_by='$added_by' and deleted='no'");
+      $num_posts = mysqli_num_rows($num_posts_query);
       $update_query = mysqli_query($this->con, "UPDATE users SET num_posts='$num_posts' where username='$added_by'");
 
       $stopWords = "a about above across after again against all almost alone along already
@@ -495,6 +495,7 @@ class Post{
         $body = $row['body'];
         $added_by = $row['added_by'];
         $date_time = $row['date_added'];
+        $imagePath = $row['image'];
 
         if($row['user_to'] == 'none'){
           $user_to = "";
@@ -602,16 +603,27 @@ class Post{
               $time_message = $interval->s." seconds ago";
             }
           }
+
+          if($imagePath != ""){
+            $imageDiv = "<div class='postedImage'>
+            <img src='$imagePath' />
+            </div>";
+          } else {
+            $imageDiv = "";
+          }
+
           $str .= "<div class = 'status_post' onClick='javascript:toggle$id()'>
                       <div class='post_profile_pic'>
                         <img src = '$profile_pic' width='50'>
                       </div>
                       <div class='posted_by' style='color:#bbbbbb;'>
-                      <a href='$added_by'>$first_name $last_name </a> $user_to &nbsp;&nbsp;&nbsp;&nbsp;$time_message
+                      <a href='$added_by'>$first_name $last_name </a> $user_to <br />$time_message
                       $delete_button
                       </div>
           <div id='post_body' class='text-light' style='cursor: pointer;'>
             $body
+            <br />
+            $imageDiv
           </div>
           <br>
           <div class='newsfeedPostOptions'>

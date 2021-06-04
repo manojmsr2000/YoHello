@@ -47,8 +47,8 @@ class Message{
       $body = $row['body'];
 
       $div_top = ($user_to == $userLoggedIn) ? "<div class='chat-message-left text-dark pb-1'>
-        <div class='flex-shrink-1 bg-success rounded py-2 px-3'>" : "<div class='chat-message-right pb-1 text-dark'>
-        <div class='flex-shrink-1 bg-primary rounded py-2 px-3'>";
+        <div class='flex-shrink-1 bg-light bg-gradient rounded py-2 px-3'>" : "<div class='chat-message-right pb-1 text-dark'>
+        <div class='flex-shrink-1  bg-info bg-gradient rounded py-2 px-3'>";
       $data = $data.$div_top.$body."</div>
     </div>";
     }
@@ -188,6 +188,9 @@ class Message{
       }
     }
 
+    if(mysqli_num_rows($query)==0){
+      echo "<p class='text-light text-center'>You have no messages!</p>";
+    } else{
     $num_iteration = 0; //Number of messages checked
     $count = 1; //number of messages posted
     $style = "";
@@ -212,22 +215,25 @@ class Message{
       $dots = (strlen($latest_message_details[1]) >= 12) ? "..." : "";
       $split = str_split($latest_message_details[1],12);
       $split = $split[0].$dots;
-      $return_string .= "<a href='messages.php?u=$username' class='list-group-item list-group-item-action border-0 bg-dark'>
-        <div style='". $style ."'>
+      $return_string .= "<a href='messages.php?u=$username' class='list-group-item border-0 list-group-item-action bg-dark'>
+        <div class='p-3 rounded' style='". $style ."'>
+        <div class='float-start'>
           <img src='".$user_found_obj->getProfilePic()."' class='rounded-circle me-2' width='40' height='40'>".$user_found_obj->getFirstAndLastName()."
+        </div>
           <span class='text-muted text-nowrap mt-2 ms-5'>". $latest_message_details[2] ."</span>
           <p class='ms-5'>". $latest_message_details[0] .$split."</p>
         </div>
       </a>";
     }
-    //if posts were loaded
+    //if messages were loaded
     if($count > $limit){
       $return_string .= "<input type='hidden' class='nextPageDropDownData' value='". ($page+1) ."' ><input type='hidden' class='noMoreDropDownData' value='false'>";
     } else {
-      $return_string .= "<input type='hidden' class='noMoreDropDownData' value='true'><p class='text-muted bg-dark' style='text-align: center'>No more messages to load!</p>";
+      $return_string .= "<input type='hidden' class='noMoreDropDownData' value='true'><p class='text-light pb-2 text-center'>No more messages to load!</p>";
 
     }
     return $return_string;
+  }
   }
 
   public function getUnreadNumber(){

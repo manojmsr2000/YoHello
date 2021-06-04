@@ -30,8 +30,9 @@ a{
 }
 
 .sidebar-toggle:hover .hamburger, .sidebar-toggle:hover .hamburger:after, .sidebar-toggle:hover .hamburger:before {
-  background: #fff
+    background: #fff;
 }
+
 
 .sidebar {
   min-width: 200px;
@@ -126,7 +127,6 @@ main .container-fluid{
   padding: 1% 10% 0 4%;
 }
 .content {
-  margin-top: 7rem;
   padding: 0 .5rem
 }
 
@@ -256,63 +256,61 @@ main .container-fluid{
 .liveSearchProfilePic img{
   width: 10%;
 }
+.resultDisplay{
+  padding: 7px;
+  border-radius: 5px;
+}
 
 .resultDisplay:hover{
-  background-color: #f9f6f7;
+  background-color: #393232;
+}
+
+.results:hover{
+  background-color: #393232;
 }
 
 .dropdown_data_window{
-  border-radius: 0 0 8px 8px;
-  width: 30%;
   position: absolute;
+  width: 323px;
   right: 10px;
   top: 20px;
+  z-index: 3;
+  border-radius: 10px;
+  background-color: ##212529;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
-.indicator{
-  background:#3f80ea;
-  box-shadow:0 .1rem .2rem rgba(0,0,0,.05);
-  border-radius:50%;
-  display:block;
-  height:18px;
-  width:18px;
-  padding:1px;
-  position:absolute;
-  top: 6px;
-  right: 13px;
-  text-align:center;
-  transition:top .1s ease-out;
-  font-size:.675rem;
-  color:#293042
+.counter.counter-lg {
+    top: -28px !important;
+    margin-left: -18px;
+    color: #f55c47;
 }
 
-.sidebar-link:hover .indicator{
-  top:0px
+#hamburger{
+  margin-top: 71px;
 }
 
 #InfoArea {
-  height: 195px !important;
+  height: 200px !important;
 }
 
-#CroppingContainer{
-  margin-left: 0 !important;
-  height: 350px !important;
+.search_results_box{
+  margin-top: 66px;
+  padding: 20px;
+  width: 350px;
 }
 
-.search_results{
-  margin-top: 80px;
-  margin-left: 80px;
-  width: 400px;
-}
-
-.resultDisplay{
-  padding: 5px;
-}
 
 .search_results_footer{
-  margin-left: 120px;
+  background-color: #1eae98;
+  border-radius: 10px;
+  padding: 5px;
+  text-align: center;
+}
+
+.search_results_footer a{
+  color: white;
 }
 
 .liveSearchText p{
@@ -335,7 +333,49 @@ main .container-fluid{
     width: 100%;
 }
 
+#post_body iframe{
+  margin-top: 10px;
+}
+
 .logo{
   color: #29a19c;
   font-family: 'Berkshire Swash', cursive;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+@media only screen and (max-width: 600px) {
+  #post_body iframe{
+    width: 310px;
+    height: 215px;
+  }
+
+  .search_results_box{
+    width: 288px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+  }
+
+  .has-search{
+    width: 161px;
+  }
+
+  .dropdown_data_window{
+    top: 40px;
+  }
 }

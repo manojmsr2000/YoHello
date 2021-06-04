@@ -22,6 +22,9 @@ if(isset($_POST['respond_request'])){
   header("Location: requests.php");
 }
 
+$logged_in_user_obj = new User($con,$userLoggedIn);
+
+
 ?>
 
   <main class = "content">
@@ -36,6 +39,12 @@ if(isset($_POST['respond_request'])){
             <p class="text-light"><?php echo "Posts: ".$user_array['num_posts']; ?></p>
             <p class="text-light"><?php echo "Likes: ".$user_array['num_likes']; ?></p>
             <p class="text-light"><?php echo "Friends: ".$num_friends; ?></p>
+            <?php if($userLoggedIn!=$username){
+              echo "<p class='text-light'>";
+              echo "Mutual Friends: ".$logged_in_user_obj->getMutualFriends($username);
+              echo "</p>";
+            }
+             ?>
           </div>
           <form action="<?php echo $username; ?>" method="POST">
             <?php
@@ -45,10 +54,10 @@ if(isset($_POST['respond_request'])){
               header("Location: user_closed.php");
             }
 
-            $logged_in_user_obj = new User($con,$userLoggedIn);
             if($userLoggedIn != $username){
               if($logged_in_user_obj->isFriend($username)){
                 echo "<button type='submit' name='remove_friend' class='btn btn-danger'>Remove Friend</button><br>";
+                echo "<a class='btn btn-primary mt-2' href='messages.php?u=".$username."' class='text-light'>Message</a>";
               }
               else if($logged_in_user_obj->didReceiveRequest($username)){
                 echo "<button type='submit' name='respond_request' class='btn btn-info'>Respond to Request</button><br>";
@@ -66,14 +75,9 @@ if(isset($_POST['respond_request'])){
           <button type="submit" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#post_form">
             Post Something
           </button>
-          <?php if($userLoggedIn!=$username){
-            echo "<div class='text-light mt-3'>";
-            echo $logged_in_user_obj->getMutualFriends($username)." Mutual Friends";
-            echo "</div>";
-          }
-           ?>
         </div>
         <div class="col col-lg-9 col-md-12 mt-3">
+          <h2 class="mb-3 text-light">Posts</h2>
           <div class="posts_area"></div>
           <img id="loading" src="assets/images/icons/loading.gif">
         </div>
