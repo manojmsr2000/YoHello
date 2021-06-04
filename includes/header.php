@@ -16,20 +16,20 @@ else{
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="eng">
 <head>
 	<title>YoHello!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes" description="It's a social networking website!">
 
   <!-- CSS files-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel=preload href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="stylesheet" href="assets/css/jquery.Jcrop.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
   <!-- javascript files-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="assets/javascript/jcrop_bits.js" charset="utf-8"></script>
   <script src="assets/javascript/jquery.Jcrop.js" charset="utf-8"></script>
   <script src="assets/javascript/yohello.js" charset="utf-8"></script>
@@ -57,7 +57,7 @@ else{
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="index.php">
+              <a class="sidebar-link" href="<?php echo $userLoggedIn; ?>">
                 <i class="align-middle mr-2 far fa-user"></i> <span class="align-middle">Profile</span>
               </a>
             </li>

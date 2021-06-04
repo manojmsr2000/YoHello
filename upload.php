@@ -159,7 +159,7 @@ if (isset($_POST['x'])){
   	    <p><b> <?=$msg?> </b></p>
 
   	    <form action="upload.php" method="post"  enctype="multipart/form-data">
-  	        Upload a picture!<br /><br />
+  	        <label for='image'>Upload a picture!<label><br /><br />
   	        <input type="file" id="image" name="image" style="width:200px; height:30px; " /><br /><br />
   	        <input type="submit" value="Submit" style="width:85px; height:25px;" />
   	    </form><br /><br />
@@ -176,7 +176,7 @@ if (isset($_POST['x'])){
   	    <div id="CroppingContainer" style="width:800px; max-height:800px; background-color:#FFF; position:relative; overflow:hidden; border:2px #666 solid; z-index:2001; padding-bottom:0px;">
 
   	        <div id="CroppingArea" style="width:500px; max-height:800px; position:relative; overflow:hidden; margin:40px 0px 40px 40px; border:2px #666 solid; float:left;">
-  	            <img src="<?=$imgSrc?>" border="0" id="jcrop_target" style="border:0px #990000 solid; position:relative; margin:0px 0px 0px 0px; padding:0px; " />
+  	            <img src="<?=$imgSrc?>" alt="upload-img" border="0" id="jcrop_target" style="border:0px #990000 solid; position:relative; margin:0px 0px 0px 0px; padding:0px; " />
   	        </div>
 
   	        <div id="InfoArea" style="width:180px; position:relative; overflow:hidden; margin:40px 0px 0px 40px; border:0px #666 solid; float:left;">

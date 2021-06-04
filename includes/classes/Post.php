@@ -7,6 +7,17 @@ class Post{
     $this->con = $con;
     $this->user_obj = new User($con,$user);
   }
+  
+   public function calculateTrend($term){
+    if($term != ""){
+      $query = mysqli_query($this->con, "SELECT * from trends where title='$term'");
+      if(mysqli_num_rows($query) == 0){
+        $insert_query = mysqli_query($this->con, "INSERT INTO trends(title, hits) VALUES('$term', '1')");
+      } else {
+        $insert_query = mysqli_query($this->con, "UPDATE trends set hits=hits+1 where title='$term'");
+      }
+    }
+  }
 
   public function submitPost($body, $user_to, $imageName){
     $body = strip_tags($body);
@@ -21,7 +32,7 @@ class Post{
         if(strpos($value, "www.youtube.com/watch?v=") !== false){
           $link = preg_split("!&!", $value);
           $value = preg_replace("!watch\?v=!", "embed/", $link[0]);
-          $value = "<br /><iframe width=\'420\' height=\'315\' src=\'".$value."\'></iframe><br />";
+          $value = "<br /><iframe title=\'video\' width=\'420\' height=\'315\' src=\'".$value."\'></iframe><br />";
           $body_array[$key] = $value;
         }
       }
@@ -104,16 +115,6 @@ class Post{
 
   }
 
-  public function calculateTrend($term){
-    if($term != ""){
-      $query = mysqli_query($this->con, "SELECT * from trends where title='$term'");
-      if(mysqli_num_rows($query) == 0){
-        $insert_query = mysqli_query($this->con, "INSERT INTO trends(title, hits) VALUES('$term', '1')");
-      } else {
-        $insert_query = mysqli_query($this->con, "UPDATE trends set hits=hits+1 where title='$term'");
-      }
-    }
-  }
 
   public function loadPostFriends($data, $limit){
     $page = $data['page'];
@@ -250,14 +251,14 @@ class Post{
           }
           if($imagePath != ""){
             $imageDiv = "<div class='postedImage'>
-            <img src='$imagePath' />
+            <img src='$imagePath' alt='post-image' />
             </div>";
           } else {
             $imageDiv = "";
           }
           $str .= "<div class = 'status_post' onClick='javascript:toggle$id()'>
                       <div class='post_profile_pic'>
-                        <img src = '$profile_pic' width='50'>
+                        <img src = '$profile_pic' width='50' alt='profile-pic'>
                       </div>
                       <div class='posted_by' style='color:#bbbbbb;'>
                       <a href='$added_by'>$first_name $last_name </a> $user_to &nbsp;&nbsp;&nbsp;&nbsp;$time_message
@@ -271,10 +272,10 @@ class Post{
           <br>
           <div class='newsfeedPostOptions'>
             comments($comments_check_num)&nbsp;&nbsp;&nbsp;&nbsp;
-            <iframe src='like.php?post_id=$id' class='like_section' scrolling='no'></iframe>
+            <iframe title='like-section' src='like.php?post_id=$id' class='like_section' scrolling='no'></iframe>
           </div>
           <div class = 'post_comment' id='toggleComment$id' style='display:none'>
-            <iframe src='comment_frame.php?post_id=$id' id='comment_iframe' frameborder=0></iframe>
+            <iframe title='comment-section' src='comment_frame.php?post_id=$id' id='comment_iframe1' frameborder=0></iframe>
           </div>
           <hr class='text-light'>
           </div>" ;
@@ -427,7 +428,7 @@ class Post{
 
           if($imagePath != ""){
             $imageDiv = "<div class='postedImage'>
-            <img src='$imagePath' />
+            <img src='$imagePath' alt='post-img' />
             </div>";
           } else {
             $imageDiv = "";
@@ -435,7 +436,7 @@ class Post{
 
           $str .= "<div class = 'status_post' onClick='javascript:toggle$id()'>
                       <div class='post_profile_pic'>
-                        <img src = '$profile_pic' width='50'>
+                        <img src = '$profile_pic' width='50' alt='profile-pic'>
                       </div>
                       <div class='posted_by' style='color:#bbbbbb;'>
                       <a href='$added_by'>$first_name $last_name </a>&nbsp;&nbsp;&nbsp;&nbsp;$time_message
@@ -449,10 +450,10 @@ class Post{
           <br>
           <div class='newsfeedPostOptions'>
             comments($comments_check_num)&nbsp;&nbsp;&nbsp;&nbsp;
-            <iframe src='like.php?post_id=$id' class='like_section' scrolling='no'></iframe>
+            <iframe title='like-section' src='like.php?post_id=$id' class='like_section' scrolling='no'></iframe>
           </div>
           <div class = 'post_comment' id='toggleComment$id' style='display:none'>
-            <iframe src='comment_frame.php?post_id=$id' id='comment_iframe' frameborder=0></iframe>
+            <iframe title='comment-section' src='comment_frame.php?post_id=$id' id='comment_iframe2' frameborder=0></iframe>
           </div>
           <hr class='text-light'>
           </div>" ;
@@ -606,7 +607,7 @@ class Post{
 
           if($imagePath != ""){
             $imageDiv = "<div class='postedImage'>
-            <img src='$imagePath' />
+            <img src='$imagePath' alt='post-image' />
             </div>";
           } else {
             $imageDiv = "";
@@ -614,7 +615,7 @@ class Post{
 
           $str .= "<div class = 'status_post' onClick='javascript:toggle$id()'>
                       <div class='post_profile_pic'>
-                        <img src = '$profile_pic' width='50'>
+                        <img src = '$profile_pic' alt='profile_pic' width='50'>
                       </div>
                       <div class='posted_by' style='color:#bbbbbb;'>
                       <a href='$added_by'>$first_name $last_name </a> $user_to <br />$time_message
@@ -628,10 +629,10 @@ class Post{
           <br>
           <div class='newsfeedPostOptions'>
             comments($comments_check_num)&nbsp;&nbsp;&nbsp;&nbsp;
-            <iframe src='like.php?post_id=$id' class='like_section' scrolling='no'></iframe>
+            <iframe title='like-section' src='like.php?post_id=$id' class='like_section' scrolling='no'></iframe>
           </div>
           <div class = 'post_comment' id='toggleComment$id' style='display:none'>
-            <iframe src='comment_frame.php?post_id=$id' id='comment_iframe' frameborder=0></iframe>
+            <iframe title='comment-section' src='comment_frame.php?post_id=$id' id='comment_iframe3' frameborder=0></iframe>
           </div>
           <hr class='text-light'>
           </div>" ;

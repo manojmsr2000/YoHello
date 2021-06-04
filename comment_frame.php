@@ -16,7 +16,7 @@ else{
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" content="width=device-width, initial-scale=1.0" description="comment frame">
     <title></title>
     <link rel="stylesheet" href="assets/css/style.css">
     <style media="screen">

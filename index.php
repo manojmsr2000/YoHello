@@ -51,6 +51,7 @@ if(isset($_POST['post'])){
 					</h1>
 			</div>
       <form class="post_form" action="index.php" method="post" enctype="multipart/form-data">
+      <label for='fileToUpload' class='text-light'>Upload a picture!</label>
         <input type="file" name="fileToUpload" class='text-light mb-2' />
         <textarea name="post_text" id="post_text" class = "form-control" rows="3" cols="80" placeholder="What's on your mind ?"></textarea>
         <input class = "btn btn-outline-light rounded-pill" type="submit" name="post" value="Post">

@@ -7,7 +7,7 @@ require 'includes/form_handlers/login_handler.php';
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" description="Registration page">
     <title>Welcome to YoHello!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -29,7 +29,7 @@ require 'includes/form_handlers/login_handler.php';
     ?>
     <div class="container-fluid">
       <div class="row">
-        <div class="col col-lg-6 wrapper">
+        <div role="img" aria-label="background image" class="col col-lg-6 wrapper">
         </div>
         <div class="col col-lg-6 bg-light">
           <h1 style = "color: #29a19c; font-family: 'Berkshire Swash', cursive;">YoHello!</h1>

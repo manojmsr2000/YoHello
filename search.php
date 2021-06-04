@@ -55,7 +55,7 @@ if(isset($_GET['type'])){
               $button = "<input name='".$row['username']."' class='btn btn-light' value='Request sent' />";
             else
               $button = "<input type='submit' name='".$row['username']."' class='btn btn-success' value='Add Friend' />";
-            $mutual_friends = $user_obj->getMutualFriends($row['username'])." friends in common";
+            $mutual_friends = $user_obj->getMutualFriends($row['username'])." friend(s) in common<br />";
 
             //Button forms
             if(isset($_POST[$row['username']])){

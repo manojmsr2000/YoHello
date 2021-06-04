@@ -17,7 +17,7 @@ $num_friends = (substr_count($user['friend_array'],",")) - 1;
     <div class="row">
       <div class="col-12 col-lg-3">
         <div class="pic_left">
-          <img src="<?php echo $user['profile_pic'] ?>" alt="" class="img-fluid rounded-3 mb-2">
+          <img src="<?php echo $user['profile_pic'] ?>" alt="profile-pic" class="img-fluid rounded-3 mb-2">
         </div>
         <div class="font-weight-bold text-light"><h4><?php echo $user['first_name']." ".$user['last_name']; ?></h4></div>
         <div class="profile_info">
