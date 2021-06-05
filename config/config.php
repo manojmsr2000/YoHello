@@ -3,8 +3,8 @@ ob_start();
 session_start();
 
 $servername = "fdb32.awardspace.net"; 
-$username = "3862591_yohello"; 
-$password = "Hello@123Man!"; 
+$username = ""; 
+$password = ""; 
 $dbname = "3862591_yohello";
 
 $timezone = date_default_timezone_set("Asia/Kolkata");
